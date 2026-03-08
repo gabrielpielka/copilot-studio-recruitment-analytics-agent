@@ -1,0 +1,360 @@
+AdaptiveDialog
+modelDescription: |-
+  Példamondatok:
+  „Mutasd meg egy adott hónap jelentkezési statisztikáit”
+  „Hány jelentkező volt 2025 októberében?”
+  „Mely cégekre jelentkeztek a legtöbben múlt hónapban?”
+  „Mik voltak a leggyakoribb elutasítási okok egy adott időszakban?”
+  „Készíts havi összefoglalót a jelentkezésekről”
+
+  Szinonimák:
+  jelentkezés / pályázat / applicant
+  cég / partner / hirdetés
+  statisztika / összesítés / kimutatás
+beginDialog:
+  kind: OnRecognizedIntent
+  id: main
+  intent: {}
+  actions:
+    - kind: SetVariable
+      id: setVariable_BN0TbT
+      variable: Global.varStartDate
+      value: "\"\""
+
+    - kind: SetVariable
+      id: setVariable_RrDFRL
+      variable: Global.varEndDate
+      value: "\"\""
+
+    - kind: SetVariable
+      id: setVariable_XsiTfy
+      variable: Global.varTopN
+      value: 10
+
+    - kind: SetMultipleVariables
+      id: setVariable_TlKVwB
+      assignments:
+        - variable: Global.varYearChoice
+          value: "\"\""
+
+        - variable: Global.varYear
+          value: 0
+
+        - variable: Global.varMonthNo
+          value: 0
+
+    - kind: Question
+      id: question_Dt3e7M
+      interruptionPolicy:
+        allowInterruption: true
+
+      variable: init:Topic.varPeriodType
+      prompt: Melyik időszakra szeretnél adatot?
+      entity:
+        kind: EmbeddedEntity
+        definition:
+          kind: ClosedListEntity
+          items:
+            - id: Előző hónap
+              displayName: Előző hónap
+
+            - id: Aktuális hónap
+              displayName: Aktuális hónap
+
+            - id: Konkrét időszakra
+              displayName: Konkrét időszakra
+
+    - kind: ConditionGroup
+      id: conditionGroup_4UIAAf
+      conditions:
+        - id: conditionItem_Lr5Vjk
+          condition: =Topic.varPeriodType = 'copilots_header_68db5.topic.Jelentkezsiadatok.main.question_Dt3e7M'.'Előző hónap'
+          actions:
+            - kind: SetMultipleVariables
+              id: setVariable_6r8vIr
+              assignments:
+                - variable: Global.varStartDate
+                  value: |-
+                    =Text(
+                        Date( Year( Today() ), Month( Today() ) - 1, 1 ),
+                        "yyyy-mm-dd"
+                    )
+
+                - variable: Global.varEndDate
+                  value: |-
+                    =Text(
+                      DateAdd(Date( Year(Today()), Month(Today()), 1 ), -1, TimeUnit.Days),
+                      "yyyy-mm-dd"
+                    )
+
+                - variable: Global.varTopN
+                  value: 10
+
+        - id: conditionItem_GAw02X
+          condition: =Topic.varPeriodType = 'copilots_header_68db5.topic.Jelentkezsiadatok.main.question_Dt3e7M'.'Aktuális hónap'
+          actions:
+            - kind: SetMultipleVariables
+              id: setVariable_1nvj18
+              assignments:
+                - variable: Global.varStartDate
+                  value: |-
+                    =Text(
+                        Date( Year( Today() ), Month( Today() ), 1 ),
+                        "yyyy-mm-dd"
+                    )
+
+                - variable: Global.varEndDate
+                  value: |-
+                    =Text(
+                        DateAdd(
+                            Date( Year( Today() ), Month( Today() ) + 1, 1 ),
+                            -1,
+                            TimeUnit.Days
+                        ),
+                        "yyyy-mm-dd"
+                    )
+
+                - variable: Global.varTopN
+                  value: 10
+
+        - id: conditionItem_vl80cu
+          condition: =Topic.varPeriodType = 'copilots_header_68db5.topic.Jelentkezsiadatok.main.question_Dt3e7M'.'Konkrét időszakra'
+          actions:
+            - kind: Question
+              id: question_k0Munk
+              interruptionPolicy:
+                allowInterruption: true
+
+              variable: init:Topic.Var1
+              prompt: Melyik évere kéred?
+              entity:
+                kind: EmbeddedEntity
+                definition:
+                  kind: ClosedListEntity
+                  items:
+                    - id: Idénre
+                      displayName: Idénre
+
+                    - id: Tavalyra
+                      displayName: Tavalyra
+
+                    - id: Konkrét évre
+                      displayName: Konkrét évre
+
+            - kind: ConditionGroup
+              id: conditionGroup_Saa7WJ
+              conditions:
+                - id: conditionItem_97Oc9p
+                  condition: =Topic.Var1 = 'copilots_header_68db5.topic.Jelentkezsiadatok.main.question_k0Munk'.Idénre
+                  actions:
+                    - kind: SetVariable
+                      id: setVariable_LKwUgN
+                      variable: Global.varYear
+                      value: =Year(Today())
+
+                - id: conditionItem_W3dOk5
+                  condition: =Topic.Var1 = 'copilots_header_68db5.topic.Jelentkezsiadatok.main.question_k0Munk'.Tavalyra
+                  actions:
+                    - kind: SetVariable
+                      id: setVariable_G9z9Sr
+                      variable: Global.varYear
+                      value: =Year(Today()) - 1
+
+                - id: conditionItem_I0byfw
+                  condition: =Topic.Var1 = 'copilots_header_68db5.topic.Jelentkezsiadatok.main.question_k0Munk'.'Konkrét évre'
+                  actions:
+                    - kind: SetVariable
+                      id: setVariable_LJ8IwS
+                      variable: Global.varYear
+                      value: 0
+
+                    - kind: Question
+                      id: question_YnVrlv
+                      interruptionPolicy:
+                        allowInterruption: true
+
+                      variable: Topic.varYearInput
+                      prompt: Add meg az évet (pl.2025) 2023 előttről nincsenek adatok
+                      entity:
+                        kind: NumberPrebuiltEntity
+                        sensitivityLevel: None
+
+                    - kind: SetVariable
+                      id: setVariable_fFgMqm
+                      variable: Global.varYear
+                      value: =Value(Topic.varYearInput)
+
+            - kind: Question
+              id: gTsBgm
+              interruptionPolicy:
+                allowInterruption: true
+
+              variable: Global.varMonth2
+              prompt: Melyik hónapot vizsgáljuk?
+              entity:
+                kind: EmbeddedEntity
+                sensitivityLevel: None
+                definition:
+                  kind: ClosedListEntity
+                  items:
+                    - id: Január
+                      displayName: Január
+
+                    - id: Február
+                      displayName: Február
+
+                    - id: Március
+                      displayName: Március
+
+                    - id: Április
+                      displayName: Április
+
+                    - id: Május
+                      displayName: Május
+
+                    - id: Június
+                      displayName: Június
+
+                    - id: Július
+                      displayName: Július
+
+                    - id: Augusztus
+                      displayName: Augusztus
+
+                    - id: Szeptember
+                      displayName: Szeptember
+
+                    - id: Október
+                      displayName: Október
+
+                    - id: November
+                      displayName: November
+
+                    - id: December
+                      displayName: December
+
+            - kind: SetVariable
+              id: hbuwx8
+              variable: Global.varMonthText2
+              value: =Text(Global.varMonth2)
+
+            - kind: SetVariable
+              id: p089Us
+              variable: Global.varMonthNo
+              value: |-
+                =Value(Switch(
+                  Text(Global.varMonth2),
+                  "Január", 1,
+                  "Február", 2,
+                  "Március", 3,
+                  "Április", 4,
+                  "Május", 5,
+                  "Június", 6,
+                  "Július", 7,
+                  "Augusztus", 8,
+                  "Szeptember", 9,
+                  "Október", 10,
+                  "November", 11,
+                  "December", 12,
+                  0
+                )
+                )
+
+            - kind: SetMultipleVariables
+              id: setVariable_5XZYWx
+              assignments:
+                - variable: Global.varStartDate
+                  value: |-
+                    =Text(
+                      Date(Value(Global.varYear), Value(Global.varMonthNo), 1),
+                      "yyyy-mm-dd"
+                    )
+
+                - variable: Global.varEndDate
+                  value: |-
+                    =Text(
+                      DateAdd(
+                        If(
+                          Value(Global.varMonthNo) = 12,
+                          Date(Value(Global.varYear) + 1, 1, 1),
+                          Date(Value(Global.varYear), Value(Global.varMonthNo) + 1, 1)
+                        ),
+                        -1,
+                        TimeUnit.Days
+                      ),
+                      "yyyy-mm-dd"
+                    )
+
+                - variable: Global.varTopN
+                  value: 10
+
+    - kind: BeginDialog
+      id: Eg0qEt
+      input:
+        binding:
+          number: =Global.varTopN
+          text: =Global.varStartDate
+          text_1: =Global.varEndDate
+
+      dialog: copilots_header_68db5.action.GetApplicationStats_Month_AF
+      output:
+        binding:
+          result: Global.varFlowResult
+
+    - kind: Question
+      id: question_YZOZOx
+      interruptionPolicy:
+        allowInterruption: true
+
+      variable: init:Topic.Var2
+      prompt: Elküldjem email-ben a részletes adatokat?
+      entity:
+        kind: EmbeddedEntity
+        definition:
+          kind: ClosedListEntity
+          items:
+            - id: Igen
+              displayName: Igen
+
+            - id: Nem
+              displayName: Nem
+
+    - kind: ConditionGroup
+      id: conditionGroup_sDDI6w
+      conditions:
+        - id: conditionItem_oTbO7K
+          condition: =Topic.Var2 = 'copilots_header_68db5.topic.Jelentkezsiadatok.main.question_YZOZOx'.Igen
+          actions:
+            - kind: Question
+              id: question_4jnk2J
+              interruptionPolicy:
+                allowInterruption: true
+
+              variable: init:Topic.varEmail
+              prompt: "Add meg az email címet, ahová küldjem az elemzést:"
+              entity: EmailPrebuiltEntity
+
+            - kind: InvokeFlowAction
+              id: invokeFlowAction_lr6S4g
+              input:
+                binding:
+                  text: =Topic.varEmail
+                  text_1: =Global.varFlowResult
+
+              output:
+                binding:
+                  status: Topic.status
+
+              flowId: 08dbc259-7518-f111-8341-000d3aab9d4a
+
+        - id: conditionItem_2KYjuK
+          condition: =Topic.Var2 = 'copilots_header_68db5.topic.Jelentkezsiadatok.main.question_YZOZOx'.Nem
+
+    - kind: InvokeAIBuilderModelAction
+      id: invokeAIBuilderModelAction_LfnatP
+      input: {}
+      output: {}
+      aIModelId: 5e2eb5f5-58f0-4d7e-ad47-21239689e8d3
+
+inputType: {}
+outputType: {}
