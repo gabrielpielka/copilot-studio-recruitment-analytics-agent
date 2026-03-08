@@ -40,6 +40,10 @@ User → Copilot Studio Agent → Power Automate → Excel + Power Query → AI 
 
 ## Copilot Studio topic logic
 
+### Date range calculation
+
+![Topic Logic 0](images/copilot-topic-logic-0.png)
+
 ### Period selection
 
 ![Topic Logic 1](images/copilot-topic-logic-1.png)
