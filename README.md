@@ -51,6 +51,7 @@ User → Copilot Studio Agent → Power Automate → Excel + Power Query → AI 
 ### Email delivery option
 
 ![Topic Logic 3](images/copilot-topic-logic-3.png)
+![Topic Logic 4](images/copilot-topic-logic-4.png)
 
 ---
 
