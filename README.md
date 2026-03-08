@@ -32,9 +32,9 @@ User → Copilot Studio Agent → Power Automate → Excel + Power Query → AI 
 
 ### Copilot chat interaction
 
-![Chat Demo 1](images/chat-demo-1.png)
+![Chat Demo 1](images/chat-request-example.png)
 
-![Chat Demo 2](images/chat-demo-2.png)
+![Chat Demo 2](images/chat-analysis-response.png)
 
 ---
 
@@ -42,15 +42,15 @@ User → Copilot Studio Agent → Power Automate → Excel + Power Query → AI 
 
 ### Period selection
 
-![Topic Logic 1](images/topic-logic-1.png)
+![Topic Logic 1](images/copilot-topic-logic-1.png)
 
 ### Date calculation logic
 
-![Topic Logic 2](images/topic-logic-2.png)
+![Topic Logic 2](images/copilot-topic-logic-2.png)
 
 ### Email delivery option
 
-![Topic Logic 3](images/topic-logic-3.png)
+![Topic Logic 3](images/copilot-topic-logic-3.png)
 
 ---
 
@@ -58,11 +58,11 @@ User → Copilot Studio Agent → Power Automate → Excel + Power Query → AI 
 
 ### Analytics flow
 
-![Power Automate Flow 1](images/power-automate-flow-1.png)
+![Power Automate Flow 1](images/power-automate-flow-analytics.png)
 
 ### Email and PDF delivery flow
 
-![Power Automate Flow 2](images/power-automate-flow-2.png)
+![Power Automate Flow 2](images/power-automate-flow-email-pdf.png)
 
 ---
 
@@ -76,7 +76,7 @@ The transformation process includes:
 - aggregation
 - creation of monthly company-level summary tables
 
-![Power Query](images/power-query-summary-company.png)
+![Power Query](images/power-query-data-transformation.png)
 
 ---
 
@@ -84,11 +84,11 @@ The transformation process includes:
 
 ### Email result
 
-![Email Result](images/email-result.png)
+![Email Result](images/email-report-result.png)
 
 ### Generated PDF report
 
-![PDF Report](images/pdf-report.png)
+![PDF Report](images/generated-report-pdf.png)
 
 ---
 
