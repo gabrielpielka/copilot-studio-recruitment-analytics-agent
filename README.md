@@ -29,7 +29,7 @@ User → Copilot Studio Agent → Power Automate → Excel + Power Query → AI 
 ---
 
 ## Demo
-
+Note: The agent operates in Hungarian in this demo because the original business environment was Hungarian.
 ### Copilot chat interaction
 
 ![Chat Demo 1](images/chat-request-example.png)
