@@ -345,7 +345,7 @@ beginDialog:
                 binding:
                   status: Topic.status
 
-              flowId: 08dbc259-7518-f111-8341-000d3aab9d4a
+              flowId: example-flow-id
 
         - id: conditionItem_2KYjuK
           condition: =Topic.Var2 = 'copilots_header_68db5.topic.Jelentkezsiadatok.main.question_YZOZOx'.Nem
