@@ -44,7 +44,7 @@ User → Copilot Studio Agent → Power Automate → Excel + Power Query → AI 
 
 ![Topic Logic 1](images/copilot-topic-logic-1.png)
 
-### Date calculation logic
+### Custom year and month selection
 
 ![Topic Logic 2](images/copilot-topic-logic-2.png)
 
