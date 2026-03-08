@@ -20,7 +20,7 @@ The agent can:
 
 ## Architecture
 
-![Architecture](images/cover-architecture.png)
+![Architecture](images/architecture-overview.png)
 
 **Flow:**
 
