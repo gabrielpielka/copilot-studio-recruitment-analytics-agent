@@ -30,6 +30,9 @@ User → Copilot Studio Agent → Power Automate → Excel + Power Query → AI 
 
 ## Demo
 Note: The agent operates in Hungarian in this demo because the original business environment was Hungarian.
+The full topic definition can be found here:
+
+[copilot-topic/final-topic.yaml](copilot-topic/final-topic.yaml)
 ### Copilot chat interaction
 
 ![Chat Demo 1](images/chat-request-example.png)
